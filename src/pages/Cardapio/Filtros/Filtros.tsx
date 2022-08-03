@@ -10,7 +10,7 @@ interface props {
 
 export default function Filtros(props: props) {
   function selecionarFiltro(opcao: IOpcao) {
-    if (props.filtro == opcao.id) {
+    if (props.filtro === opcao.id) {
       return props.setFiltro(null);
     }
     return props.setFiltro(opcao.id);
@@ -26,7 +26,7 @@ export default function Filtros(props: props) {
             // otherwise, it will just be the value itself
             // eg: here without brackets, the key would be "styles.filtros__filtro"
             [styles.filtros__filtro] : true,
-            [styles["filtros__filtro--ativo"]] : props.filtro == opcao.id
+            [styles["filtros__filtro--ativo"]] : props.filtro === opcao.id
           })}
         //   default way to do this
         //   className={`${styles.filtros__filtro} ${
