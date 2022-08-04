@@ -11,7 +11,6 @@ interface Props {
 
 export default function Itens(props: Props) {
   const [lista, setLista] = useState(cardapio);
-  // const {busca, filtro} = props
 
   function testarBusca(title: string) {
     const regex = new RegExp(props.busca, "i");
@@ -23,12 +22,30 @@ export default function Itens(props: Props) {
     return true;
   }
 
+  function ordenar(lista:typeof cardapio) {
+    switch (props.ordenador) {
+      case 'porcao':
+        return lista.sort((a,b)=>a.size>b.size ? 1 : -1)
+        break;
+      case 'qtd_pessoas':
+        return lista.sort((a,b)=>a.serving>b.serving ? 1 : -1)
+        break;
+      case 'preco':
+        return lista.sort((a,b)=>a.price>b.price ? 1 : -1)
+        break;
+    
+      default:
+        return lista
+        break;
+    }
+  }
+
   useEffect(() => {
     const novaLista = cardapio.filter(
       (item) => testarBusca(item.title) && testarFiltro(item.category.id)
     );
-    setLista(novaLista);
-  }, [props.busca, props.filtro]);
+    setLista(ordenar(novaLista));
+  }, [props.busca, props.filtro, props.ordenador]);
 
   return (
     <div className={styles.itens}>
